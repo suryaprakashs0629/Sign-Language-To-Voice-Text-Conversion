@@ -1,4 +1,3 @@
-# Sign-Language-To-Voice-Text-Conversion
 # Sign Language to Voice/Text Conversion
 
 ## Project Overview
