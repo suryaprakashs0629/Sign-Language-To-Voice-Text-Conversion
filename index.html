@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Sign Language Translator</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+</head>
+
+<body>
+
+<h1>🤟 AI Sign Language Translator</h1>
+
+<div class="main">
+
+<div class="camera-box">
+<video id="video" autoplay playsinline></video>
+<canvas id="canvas"></canvas>
+</div>
+
+<div class="output" id="textOutput">
+Waiting for sign...
+</div>
+
+<div class="confidence" id="confidenceOutput">
+Confidence: 0%
+</div>
+
+<div class="controls">
+<button onclick="speak()">🔊 Speak</button>
+<button onclick="clearText()">Clear</button>
+</div>
+
+<div class="guide">
+
+<h2>📘 Basic Hand Signs</h2>
+
+<div class="card">
+<div class="gesture">👋 HI</div>
+Raise open palm and wave slowly.
+</div>
+
+<div class="card">
+<div class="gesture">🙏 THANK YOU</div>
+Touch fingers near chin and move outward.
+</div>
+
+<div class="card">
+<div class="gesture">🆘 HELP</div>
+Thumb up with closed fist.
+</div>
+
+<div class="card">
+<div class="gesture">👍 YES</div>
+Show thumbs up.
+</div>
+
+<div class="card">
+<div class="gesture">👎 NO</div>
+Show thumbs down.
+</div>
+
+<div class="card">
+<div class="gesture">💧 WATER</div>
+Three fingers near mouth.
+</div>
+
+<div class="card">
+<div class="gesture">✋ STOP</div>
+Open palm facing camera.
+</div>
+
+<div class="card">
+<div class="gesture">🍚 FOOD</div>
+Bring fingers toward mouth.
+</div>
+
+<div class="card">
+<div class="gesture">🏥 HOSPITAL</div>
+Cross index fingers in X shape.
+</div>
+
+<div class="card">
+<div class="gesture">🌞 GOOD MORNING</div>
+Open palm rising upward.
+</div>
+
+</div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
