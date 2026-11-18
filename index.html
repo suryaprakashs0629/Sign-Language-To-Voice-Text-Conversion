@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignVoice — Assistive Sign Language Communication System</title>
+  <meta name="description" content="Sign Language to Voice/Text Conversion.">
+  <meta name="theme-color" content="#0B0F19">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- MediaPipe Computer Vision Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="mirrored">
+  <div class="mesh-bg"></div>
+
+  <!-- INTERACTIVE SCROLLING AI HAND CANVAS LAYER (CLEAN BACKGROUND) -->
+  <div id="aiHandStage">
+    <canvas id="aiHandCanvas"></canvas>
+  </div>
+
+  <header>
+    <div class="container header-content">
+      <a href="#home" class="logo-container" onclick="navigate('home')">
+        <div class="logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+            <path d="M10 4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M6 11V7a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+            <path d="M18 11a4 4 0 0 1 4 4v2a6 6 0 0 1-6 6H9a8 8 0 0 1-8-8v-2a4 4 0 0 1 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">SIGNVOICE</div>
+          <div class="logo-sub">Sign Language to Voice / Text</div>
+        </div>
+      </a>
+
+      <nav id="mainNav">
+        <a href="#home" class="nav-link active" data-route="home">Home</a>
+        <a href="#translate" class="nav-link" data-route="translate">Translator</a>
+        <a href="#sign-guide" class="nav-link" data-route="sign-guide">Sign Guide</a>
+        <a href="#datasheet" class="nav-link" data-route="datasheet">Data Sheet</a>
+        <a href="#practice" class="nav-link" data-route="practice">Practice</a>
+        <a href="#dashboard" class="nav-link" data-route="dashboard">Dashboard</a>
+        <a href="#history" class="nav-link" data-route="history">History</a>
+        <a href="#about" class="nav-link" data-route="about">About</a>
+      </nav>
+
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="btn btn-danger" onclick="navigate('emergency')" style="padding: 6px 12px; font-size: 0.8rem;">Emergency</button>
+        <button class="btn btn-secondary" onclick="toggleTheme()" id="themeBtn" style="padding: 6px 10px;" title="Toggle Light/Dark Theme">🌓</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('shortcutsModal').style.display='flex'" style="padding: 6px 10px;" title="Keyboard Shortcuts">⌨️</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileNav()" title="Open Navigation">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="#home" class="nav-link" onclick="toggleMobileNav(); navigate('home');">Home</a>
+      <a href="#translate" class="nav-link" onclick="toggleMobileNav(); navigate('translate');">Translator</a>
+      <a href="#sign-guide" class="nav-link" onclick="toggleMobileNav(); navigate('sign-guide');">Sign Guide (20 Signs)</a>
+      <a href="#datasheet" class="nav-link" onclick="toggleMobileNav(); navigate('datasheet');">Kinematic Data Sheet</a>
+      <a href="#practice" class="nav-link" onclick="toggleMobileNav(); navigate('practice');">Practice Mode</a>
+      <a href="#dashboard" class="nav-link" onclick="toggleMobileNav(); navigate('dashboard');">Dashboard</a>
+      <a href="#history" class="nav-link" onclick="toggleMobileNav(); navigate('history');">History</a>
+      <a href="#about" class="nav-link" onclick="toggleMobileNav(); navigate('about');">About Team</a>
+    </div>
+  </header>
+
+  <main class="container" id="router-view"></main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:28px;">
+      <div>
+        <div style="font-weight:700; color:var(--text-main); margin-bottom:6px;">SIGNVOICE</div>
+        <p>Sign Language to Voice/Text Conversion</p>
+        <p style="margin-top:12px; font-size:0.8rem; color:var(--text-faint);">
+          Department of Electronics and Communication / Computer Engineering
+        </p>
+      </div>
+      <div style="display:flex; gap:36px; font-size:0.88rem;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <a href="#home" style="color:inherit; text-decoration:none;">Home</a>
+          <a href="#translate" style="color:inherit; text-decoration:none;">Translator</a>
+          <a href="#sign-guide" style="color:inherit; text-decoration:none;">Sign Guide</a>
+          <a href="#datasheet" style="color:inherit; text-decoration:none;">Data Sheet</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <a href="#practice" style="color:inherit; text-decoration:none;">Practice Mode</a>
+          <a href="#dashboard" style="color:inherit; text-decoration:none;">Dashboard</a>
+          <a href="#history" style="color:inherit; text-decoration:none;">History</a>
+          <a href="#about" style="color:inherit; text-decoration:none;">Team Details</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="shortcutsModal" onclick="if(event.target===this) this.style.display='none'">
+    <div class="modal">
+      <h3 class="serif" style="font-size:1.4rem; margin-bottom: 18px;">Keyboard Shortcuts</h3>
+      <div class="shortcut-row"><span>Translator Workspace</span> <kbd>T</kbd></div>
+      <div class="shortcut-row"><span>Sign Guide</span> <kbd>G</kbd></div>
+      <div class="shortcut-row"><span>Kinematic Data Sheet</span> <kbd>S</kbd></div>
+      <div class="shortcut-row"><span>Practice Mode</span> <kbd>P</kbd></div>
+      <div class="shortcut-row"><span>Dashboard</span> <kbd>D</kbd></div>
+      <div class="shortcut-row"><span>Translation History</span> <kbd>H</kbd></div>
+      <div class="shortcut-row"><span>Emergency Mode</span> <kbd>E</kbd></div>
+      <div class="shortcut-row" style="border:none;"><span>Close Modal</span> <kbd>ESC</kbd></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">NOTIFICATION</div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
